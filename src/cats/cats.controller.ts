@@ -1,4 +1,4 @@
-import { Controller, Get, Header, Post } from '@nestjs/common';
+import { Controller, Get, Header, Post, Redirect } from '@nestjs/common';
 
 @Controller('cats')
 export class CatsController {
@@ -8,7 +8,8 @@ export class CatsController {
     return 'This action adds a new cat';
   }
 
-  @Get('ab*cd')
+  @Get()
+  @Redirect('https://nestjs.com', 301)
   findAll(): string {
     return 'This action returns all cats';
   }
