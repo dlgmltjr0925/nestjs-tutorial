@@ -1,5 +1,12 @@
-import { Controller, Get, Header, Post, Query, Redirect } from '@nestjs/common';
-import { version } from 'prettier';
+import {
+  Controller,
+  Get,
+  Header,
+  Param,
+  Post,
+  Query,
+  Redirect,
+} from '@nestjs/common';
 
 @Controller('cats')
 export class CatsController {
@@ -20,5 +27,11 @@ export class CatsController {
     if (version && version === '5') {
       return { url: 'https://docs.nestjs.com/v5/' };
     }
+  }
+
+  @Get(':id')
+  findOne(@Param() params): string {
+    console.log(params.id);
+    return `This action returns a #${params.id} cat`;
   }
 }
