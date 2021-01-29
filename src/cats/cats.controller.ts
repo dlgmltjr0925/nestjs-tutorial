@@ -9,7 +9,7 @@ export class CatsController {
     return 'This action adds a new cat';
   }
 
-  @Get()
+  @Get('ab*cd')
   findAll(): string {
     return 'This action returns all cats';
   }
