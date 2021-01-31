@@ -1,38 +1,39 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
-  Header,
   Param,
   Post,
+  Put,
   Query,
-  Redirect,
 } from '@nestjs/common';
-import { CreateCatDto } from './create-cat.dto';
+import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 
 @Controller('cats')
 export class CatsController {
   @Post()
-  @Header('Cache-Control', 'none')
-  async create(@Body() createCatDto: CreateCatDto): Promise<string> {
+  create(@Body() createCatDto: CreateCatDto) {
     return 'This action adds a new cat';
   }
 
   @Get()
-  findAll(): string {
-    return 'This action returns all cats';
-  }
-
-  @Get('docs')
-  @Redirect('https://docs.nestjs.com', 302)
-  getDocs(@Query('version') version) {
-    if (version && version === '5') {
-      return { url: 'https://docs.nestjs.com/v5/' };
-    }
+  findAll(@Query() query: ListAllEntities) {
+    return `This action returns all cats (limit: ${query.limit} items)`;
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): string {
+  findOne(@Param('id') id: string) {
     return `This action returns a #${id} cat`;
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
+    return `This action updates a #${id} cat`;
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `This action removes a #${id} cat`;
   }
 }
