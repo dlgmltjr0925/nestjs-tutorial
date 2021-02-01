@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { CatsController } from './cats/cats.controller';
 import { Module } from '@nestjs/common';
 import { CatsService } from './cats/cats.service';
+import { HttpService } from './http/http.service';
 
 @Module({
   imports: [],
@@ -14,6 +15,6 @@ import { CatsService } from './cats/cats.service';
     AdminController,
     AccountController,
   ],
-  providers: [AppService, CatsService],
+  providers: [AppService, CatsService, HttpService],
 })
 export class AppModule {}
