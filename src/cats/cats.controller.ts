@@ -12,11 +12,15 @@ import {
 } from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 import { Response } from 'express';
+import { CatsService } from './cats.service';
 
 @Controller('cats')
 export class CatsController {
+  constructor(private catsService: CatsService) {}
+
   @Post()
   create(@Body() createCatDto: CreateCatDto, @Res() res: Response) {
+    this.catsService.create(createCatDto);
     res.status(HttpStatus.CREATED).send();
   }
 
@@ -26,7 +30,7 @@ export class CatsController {
     @Res({ passthrough: true }) res: Response,
   ) {
     res.status(HttpStatus.OK);
-    return [];
+    return this.catsService.findAll();
   }
 
   @Get(':id')
