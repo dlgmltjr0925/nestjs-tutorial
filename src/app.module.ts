@@ -9,6 +9,7 @@ import { AccountController } from './account/account.controller';
 import { AdminController } from './admin/admin.controller';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CatsController } from './cats/cats.controller';
 import { CatsModule } from './cats/cats.module';
 import { LoggerMiddleWare } from './common/middleware/logger.middleware';
 
@@ -19,9 +20,6 @@ import { LoggerMiddleWare } from './common/middleware/logger.middleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleWare).forRoutes({
-      path: 'cats/ab*cd',
-      method: RequestMethod.ALL,
-    });
+    consumer.apply(LoggerMiddleWare).forRoutes(CatsController);
   }
 }
