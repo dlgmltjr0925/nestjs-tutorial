@@ -20,8 +20,8 @@ import { LoggerMiddleWare } from './common/middleware/logger.middleware';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleWare).forRoutes({
-      path: 'cats',
-      method: RequestMethod.GET,
+      path: 'cats/ab*cd',
+      method: RequestMethod.ALL,
     });
   }
 }
