@@ -7,4 +7,6 @@ import { Module } from '@nestjs/common';
   providers: [CatsService],
   exports: [CatsService],
 })
-export class CatsModule {}
+export class CatsModule {
+  constructor(private catService: CatsService) {}
+}
