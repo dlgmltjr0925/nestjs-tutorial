@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
   HttpStatus,
   Param,
   Post,
@@ -25,12 +26,20 @@ export class CatsController {
   }
 
   @Get()
-  findAll(
+  async findAll(
     @Query() query: ListAllEntities,
     @Res({ passthrough: true }) res: Response,
   ) {
-    res.status(HttpStatus.OK);
-    return this.catsService.findAll();
+    // res.status(HttpStatus.OK);
+    // return this.catsService.findAll();
+    // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: 'This is a custom message',
+      },
+      HttpStatus.FORBIDDEN,
+    );
   }
 
   @Get(':id')
