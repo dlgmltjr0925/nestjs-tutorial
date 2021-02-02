@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  ForbiddenException,
   Get,
   HttpException,
   HttpStatus,
@@ -33,13 +34,14 @@ export class CatsController {
     // res.status(HttpStatus.OK);
     // return this.catsService.findAll();
     // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    throw new HttpException(
-      {
-        status: HttpStatus.FORBIDDEN,
-        error: 'This is a custom message',
-      },
-      HttpStatus.FORBIDDEN,
-    );
+    // throw new HttpException(
+    //   {
+    //     status: HttpStatus.FORBIDDEN,
+    //     error: 'This is a custom message',
+    //   },
+    //   HttpStatus.FORBIDDEN,
+    // );
+    throw new ForbiddenException();
   }
 
   @Get(':id')
