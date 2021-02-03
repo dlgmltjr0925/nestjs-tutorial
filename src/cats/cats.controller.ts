@@ -11,19 +11,25 @@ import {
   Put,
   Query,
   Res,
+  UseFilters,
 } from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 import { Response } from 'express';
 import { CatsService } from './cats.service';
+import { HttpExceptionFilter } from 'src/common/exception/http-exception.filter';
 
 @Controller('cats')
+// @UseFilters(new HttpExceptionFilter())
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Post()
+  // @UseFilters(new HttpExceptionFilter())
+  // @UseFilters(HttpExceptionFilter)
   create(@Body() createCatDto: CreateCatDto, @Res() res: Response) {
     this.catsService.create(createCatDto);
-    res.status(HttpStatus.CREATED).send();
+    // res.status(HttpStatus.CREATED).send();
+    throw new ForbiddenException();
   }
 
   @Get()
