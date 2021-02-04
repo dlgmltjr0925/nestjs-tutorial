@@ -7,6 +7,8 @@ import {
   HttpException,
   HttpStatus,
   Param,
+  ParseIntPipe,
+  ParseUUIDPipe,
   Post,
   Put,
   Query,
@@ -51,9 +53,21 @@ export class CatsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return `This action returns a #${id} cat`;
+  findOne(
+    @Param(
+      'id',
+      // new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+      ParseIntPipe,
+    )
+    id: number,
+  ) {
+    return this.catsService.findOne(id);
   }
+
+  // @Get(':uuid')
+  // async findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+  //   return this.catsService.findOne(uuid);
+  // }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
