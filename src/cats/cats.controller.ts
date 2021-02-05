@@ -14,11 +14,20 @@ import {
   Query,
   Res,
   UseFilters,
+  UsePipes,
 } from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 import { Response } from 'express';
 import { CatsService } from './cats.service';
 import { HttpExceptionFilter } from 'src/common/exception/http-exception.filter';
+import { JoiValidationPipe } from 'src/common/pipe/joi-validation.pipe';
+import * as Joi from 'joi';
+
+const createCatSchema = Joi.object<CreateCatDto>({
+  name: Joi.string().min(3).max(30).required(),
+  age: Joi.number().min(1).max(100).required(),
+  breed: Joi.string(),
+});
 
 @Controller('cats')
 // @UseFilters(new HttpExceptionFilter())
@@ -28,10 +37,11 @@ export class CatsController {
   @Post()
   // @UseFilters(new HttpExceptionFilter())
   // @UseFilters(HttpExceptionFilter)
+  @UsePipes(new JoiValidationPipe(createCatSchema))
   create(@Body() createCatDto: CreateCatDto, @Res() res: Response) {
     this.catsService.create(createCatDto);
     // res.status(HttpStatus.CREATED).send();
-    throw new ForbiddenException();
+    // throw new ForbiddenException();
   }
 
   @Get()
