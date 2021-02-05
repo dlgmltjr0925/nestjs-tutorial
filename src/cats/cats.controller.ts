@@ -15,6 +15,7 @@ import {
   Res,
   UseFilters,
   UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 import { Response } from 'express';
@@ -38,7 +39,10 @@ export class CatsController {
   // @UseFilters(new HttpExceptionFilter())
   // @UseFilters(HttpExceptionFilter)
   @UsePipes(new JoiValidationPipe(createCatSchema))
-  create(@Body() createCatDto: CreateCatDto, @Res() res: Response) {
+  async create(
+    @Body(new ValidationPipe()) createCatDto: CreateCatDto,
+    @Res() res: Response,
+  ) {
     this.catsService.create(createCatDto);
     // res.status(HttpStatus.CREATED).send();
     // throw new ForbiddenException();
