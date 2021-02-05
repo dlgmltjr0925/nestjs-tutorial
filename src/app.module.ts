@@ -1,11 +1,12 @@
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import {
   MiddlewareConsumer,
   Module,
   NestModule,
   RequestMethod,
+  ValidationPipe,
 } from '@nestjs/common';
 
-import { APP_FILTER } from '@nestjs/core';
 import { AccountController } from './account/account.controller';
 import { AdminController } from './admin/admin.controller';
 import { AppController } from './app.controller';
@@ -23,6 +24,10 @@ import { logger } from './common/middleware/logger.middleware';
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
     },
   ],
 })

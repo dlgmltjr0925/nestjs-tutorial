@@ -40,7 +40,7 @@ export class CatsController {
   // @UseFilters(HttpExceptionFilter)
   @UsePipes(new JoiValidationPipe(createCatSchema))
   async create(
-    @Body(new ValidationPipe()) createCatDto: CreateCatDto,
+    @Body(/*new ValidationPipe()*/) createCatDto: CreateCatDto,
     @Res() res: Response,
   ) {
     this.catsService.create(createCatDto);
