@@ -18,6 +18,12 @@ import { RolesGuard } from './common/guard/roles.guard';
 import { UsersController } from './users/users.controller';
 import { logger } from './common/middleware/logger.middleware';
 
+const connection = {
+  /* implementation
+  ...
+  */
+};
+
 @Module({
   imports: [CatsModule],
   controllers: [
@@ -43,6 +49,10 @@ import { logger } from './common/middleware/logger.middleware';
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
+    },
+    {
+      provide: 'CONNECTION',
+      useValue: connection,
     },
   ],
 })
