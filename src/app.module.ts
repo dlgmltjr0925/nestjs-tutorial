@@ -3,7 +3,6 @@ import {
   MiddlewareConsumer,
   Module,
   NestModule,
-  RequestMethod,
   ValidationPipe,
 } from '@nestjs/common';
 
