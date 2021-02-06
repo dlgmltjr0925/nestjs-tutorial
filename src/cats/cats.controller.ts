@@ -1,12 +1,14 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   ForbiddenException,
   Get,
   HttpException,
   HttpStatus,
   Param,
+  ParseBoolPipe,
   ParseUUIDPipe,
   Post,
   Put,
@@ -50,8 +52,11 @@ export class CatsController {
 
   @Get()
   async findAll(
-    @Query() query: ListAllEntities,
-    @Res({ passthrough: true }) res: Response,
+    // @Query() query: ListAllEntities,
+    // @Res({ passthrough: true }) res: Response,
+    @Query('activeOnly', new DefaultValuePipe(false), ParseBoolPipe)
+    activeOnly: boolean,
+    @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number,
   ) {
     // res.status(HttpStatus.OK);
     // return this.catsService.findAll();
@@ -63,7 +68,7 @@ export class CatsController {
     //   },
     //   HttpStatus.FORBIDDEN,
     // );
-    throw new ForbiddenException();
+    // throw new ForbiddenException();
   }
 
   @Get(':id')
