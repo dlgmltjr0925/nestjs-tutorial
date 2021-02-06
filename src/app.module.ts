@@ -16,13 +16,17 @@ import { CatsModule } from './cats/cats.module';
 import { HttpExceptionFilter } from './common/exception/http-exception.filter';
 import { LoggingInterceptor } from './common/interceptor/logging.interceptor';
 import { RolesGuard } from './common/guard/roles.guard';
-import { logger } from './common/middleware/logger.middleware';
-import { UserController } from './user/user.controller';
 import { UsersController } from './users/users.controller';
+import { logger } from './common/middleware/logger.middleware';
 
 @Module({
   imports: [CatsModule],
-  controllers: [AppController, AdminController, AccountController, UserController, UsersController],
+  controllers: [
+    AppController,
+    AdminController,
+    AccountController,
+    UsersController,
+  ],
   providers: [
     AppService,
     {
