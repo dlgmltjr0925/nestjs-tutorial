@@ -4,6 +4,7 @@ import { AllExceptionsFilter } from './common/exception/all-exceptions.filter';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/exception/http-exception.filter';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { RolesGuard } from './common/guard/roles.guard';
 import { ValidationPipe } from '@nestjs/common';
 import { logger } from './common/middleware/logger.middleware';
 
@@ -15,6 +16,7 @@ async function bootstrap() {
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   // app.useGlobalPipes(new ValidationPipe());
+  // app.useGlobalGuards(new RolesGuard());
 
   await app.listen(3000);
 }
