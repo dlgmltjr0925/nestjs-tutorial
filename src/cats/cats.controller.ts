@@ -7,7 +7,6 @@ import {
   HttpException,
   HttpStatus,
   Param,
-  ParseIntPipe,
   ParseUUIDPipe,
   Post,
   Put,
@@ -22,6 +21,7 @@ import { Response } from 'express';
 import { CatsService } from './cats.service';
 import { HttpExceptionFilter } from 'src/common/exception/http-exception.filter';
 import { JoiValidationPipe } from 'src/common/pipe/joi-validation.pipe';
+import { ParseIntPipe } from 'src/common/pipe/parse-int.pipe';
 import * as Joi from 'joi';
 
 const createCatSchema = Joi.object<CreateCatDto>({
@@ -71,7 +71,8 @@ export class CatsController {
     @Param(
       'id',
       // new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
-      ParseIntPipe,
+      // ParseIntPipe,
+      new ParseIntPipe(),
     )
     id: number,
   ) {
