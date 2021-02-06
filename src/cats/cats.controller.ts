@@ -17,6 +17,7 @@ import {
   SetMetadata,
   UseFilters,
   UseGuards,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -29,6 +30,7 @@ import { ParseIntPipe } from 'src/common/pipe/parse-int.pipe';
 import * as Joi from 'joi';
 import { RolesGuard } from 'src/common/guard/roles.guard';
 import { Roles } from 'src/common/decorator/roles.decorator';
+import { LoggingInterceptor } from 'src/common/interceptor/logging.interceptor';
 
 const createCatSchema = Joi.object<CreateCatDto>({
   name: Joi.string().min(3).max(30).required(),
@@ -39,6 +41,7 @@ const createCatSchema = Joi.object<CreateCatDto>({
 @Controller('cats')
 // @UseFilters(new HttpExceptionFilter())
 // @UseGuards(RolesGuard)
+// @UseInterceptors(LoggingInterceptor)
 export class CatsController {
   constructor(private catsService: CatsService) {}
 

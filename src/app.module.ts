@@ -1,4 +1,4 @@
-import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import {
   MiddlewareConsumer,
   Module,
@@ -14,6 +14,7 @@ import { AppService } from './app.service';
 import { CatsController } from './cats/cats.controller';
 import { CatsModule } from './cats/cats.module';
 import { HttpExceptionFilter } from './common/exception/http-exception.filter';
+import { LoggingInterceptor } from './common/interceptor/logging.interceptor';
 import { RolesGuard } from './common/guard/roles.guard';
 import { logger } from './common/middleware/logger.middleware';
 
@@ -33,6 +34,10 @@ import { logger } from './common/middleware/logger.middleware';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
     },
   ],
 })
