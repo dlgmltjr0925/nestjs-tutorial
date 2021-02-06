@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, ValidationPipe } from '@nestjs/common';
 import { User } from 'src/common/decorator/user.decorator';
 
 type Role = 'admin' | 'member';
@@ -13,13 +13,16 @@ interface UserEntity {
 
 @Controller('users')
 export class UsersController {
-  // @Get()
-  // async findOne(@User() user: UserEntity) {
-  //   console.log(user);
-  // }
-
   @Get()
-  async findOne(@User('firstName') firstName: string) {
-    console.log(`Hello ${firstName}`);
+  async findOne(
+    @User(new ValidationPipe({ validateCustomDecorators: true }))
+    user: UserEntity,
+  ) {
+    console.log(user);
   }
+
+  // @Get()
+  // async findOne(@User('firstName') firstName: string) {
+  //   console.log(`Hello ${firstName}`);
+  // }
 }
