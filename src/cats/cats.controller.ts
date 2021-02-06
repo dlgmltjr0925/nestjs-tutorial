@@ -14,6 +14,7 @@ import {
   Put,
   Query,
   Res,
+  SetMetadata,
   UseFilters,
   UseGuards,
   UsePipes,
@@ -27,6 +28,7 @@ import { JoiValidationPipe } from 'src/common/pipe/joi-validation.pipe';
 import { ParseIntPipe } from 'src/common/pipe/parse-int.pipe';
 import * as Joi from 'joi';
 import { RolesGuard } from 'src/common/guard/roles.guard';
+import { Roles } from 'src/common/decorator/roles.decorator';
 
 const createCatSchema = Joi.object<CreateCatDto>({
   name: Joi.string().min(3).max(30).required(),
@@ -44,6 +46,8 @@ export class CatsController {
   // @UseFilters(new HttpExceptionFilter())
   // @UseFilters(HttpExceptionFilter)
   @UsePipes(new JoiValidationPipe(createCatSchema))
+  // @SetMetadata('roels', ['admin'])
+  @Roles('admin')
   async create(
     @Body(/*new ValidationPipe()*/) createCatDto: CreateCatDto,
     @Res() res: Response,
