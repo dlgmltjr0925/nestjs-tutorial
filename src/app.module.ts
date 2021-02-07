@@ -78,6 +78,16 @@ const loggerAliasProvider: Provider = {
   useExisting: LoggerService,
 };
 
+const devConfig = new DevelopmentConfigService();
+const prodConfig = new ProductionConfigService();
+
+const configFactory: Provider = {
+  provide: 'CONFIG',
+  useFactory: () => {
+    return process.env.NODE_ENV === 'development' ? devConfig : prodConfig;
+  },
+};
+
 @Module({
   imports: [CatsModule],
   controllers: [
@@ -111,6 +121,7 @@ const loggerAliasProvider: Provider = {
     configServiceProvider,
     LoggerService,
     loggerAliasProvider,
+    configFactory,
   ],
 })
 export class AppModule implements NestModule {
