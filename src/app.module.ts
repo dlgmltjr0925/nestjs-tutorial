@@ -123,6 +123,7 @@ const configFactory: Provider = {
     loggerAliasProvider,
     configFactory,
   ],
+  exports: ['CONNECTION'],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
