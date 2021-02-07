@@ -3,6 +3,7 @@ import {
   MiddlewareConsumer,
   Module,
   NestModule,
+  Provider,
   ValidationPipe,
 } from '@nestjs/common';
 
@@ -16,6 +17,7 @@ import { CatsService } from './cats/cats.service';
 import { ConfigService } from './config/config.service';
 import { DevelopmentConfigService } from './config/development-config.service';
 import { HttpExceptionFilter } from './common/exception/http-exception.filter';
+import { LoggerService } from './logger/logger.service';
 import { LoggingInterceptor } from './common/interceptor/logging.interceptor';
 import { ProductionConfigService } from './config/production-config.service';
 import { RolesGuard } from './common/guard/roles.guard';
@@ -34,12 +36,46 @@ const connection = {
   */
 };
 
-const configServiceProvider = {
+const configServiceProvider: Provider = {
   provide: ConfigService,
   useClass:
     process.env.NODE_ENV === 'development'
       ? DevelopmentConfigService
       : ProductionConfigService,
+};
+
+interface Options {
+  host: string;
+}
+class OptionsProvider {
+  host: string;
+
+  get() {
+    return {
+      host: '',
+    };
+  }
+}
+
+class DatabaseConnection {
+  options: Options;
+  constructor(options: Options) {
+    this.options = options;
+  }
+}
+
+// const connectionFactory: Provider = {
+//   provide: 'CONNECTION',
+//   useFactory: (optionsProvider: OptionsProvider) => {
+//     const options = optionsProvider.get();
+//     return new DatabaseConnection(options);
+//   },
+//   inject: [OptionsProvider],
+// };
+
+const loggerAliasProvider: Provider = {
+  provide: 'AliasedLoggerService',
+  useExisting: LoggerService,
 };
 
 @Module({
@@ -73,6 +109,8 @@ const configServiceProvider = {
       useValue: connection,
     },
     configServiceProvider,
+    LoggerService,
+    loggerAliasProvider,
   ],
 })
 export class AppModule implements NestModule {
