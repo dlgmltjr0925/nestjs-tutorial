@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: ID!
+  username: String!
+  password: String!
+}
+
 type Recipe {
   id: ID!
   title: String!
@@ -16,6 +22,7 @@ scalar Date
 type Query {
   recipe(id: String!): Recipe!
   recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
+  whoAmI: User!
 }
 
 type Mutation {
