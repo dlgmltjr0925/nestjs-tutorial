@@ -1,16 +1,13 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class User {
+export class Article {
   @Field(() => ID)
   id: number;
 
   @Field()
-  username: string;
+  isPublished: boolean;
 
   @Field()
-  password: string;
-
-  @Field()
-  isAdmin: boolean;
+  authorId: string;
 }

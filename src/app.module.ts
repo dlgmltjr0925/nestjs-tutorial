@@ -9,6 +9,7 @@ import { Module } from '@nestjs/common';
 import { RecipesModule } from './recipes/recipes.module';
 import { RolesGuard } from './auth/roles.guard';
 import { UsersModule } from './users/users.module';
+import { CaslModule } from './casl/casl.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     AuthModule,
     UsersModule,
     CatsModule,
+    CaslModule,
   ],
   // providers: [
   //   {

@@ -6,6 +6,7 @@ type User {
   id: ID!
   username: String!
   password: String!
+  isAdmin: Boolean!
 }
 
 type Recipe {

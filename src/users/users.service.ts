@@ -8,11 +8,13 @@ export class UsersService {
       id: 1,
       username: 'john',
       password: 'changeme',
+      isAdmin: true,
     },
     {
       id: 2,
       username: 'maria',
       password: 'guess',
+      isAdmin: false,
     },
   ];
 

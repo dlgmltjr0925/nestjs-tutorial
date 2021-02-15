@@ -13,7 +13,6 @@ export class UsersResolver {
   @Query((returns) => User)
   @UseGuards(GqlAuthGuard)
   whoAmI(@CurrentUser() user: User) {
-    console.log(user);
     return this.usersService.findById(user.id);
   }
 }
